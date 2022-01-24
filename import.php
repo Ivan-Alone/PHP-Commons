@@ -1,4 +1,7 @@
 //<?php
+	if (!defined('_COMMONS_ENTRY')) {
+		define('_COMMONS_ENTRY', 'import.php');
+	}
 	if (!defined('_COMMONS_REPO')) {
 		define('_COMMONS_REPO', 'https://raw.githubusercontent.com/ivan-alone/php-commons/master/scripts');
 	}
@@ -6,11 +9,15 @@
 		define('_COMMONS_DIR', 'common_scripts');
 	}
 	
-	if (!file_exists('import.php')) {
+	if (!file_exists(_COMMONS_ENTRY)) {
 		$data = substr(@file_get_contents(_COMMONS_REPO.'/../import.php'), 2);
 		if (strlen($data) > 0) {
-			file_put_contents('import.php', $data);
+			@file_put_contents(_COMMONS_ENTRY, $data);
 		}
+	}
+	
+	if (!defined('_COMMONS_NO_WARNING') && strtolower(basename(__FILE__)) != strtolower(_COMMONS_ENTRY) && file_exists(_COMMONS_ENTRY)) {
+		echo '[Info] PHP Commons import script loaded and stored, please replace "eval(file_get_contents(\'https://is.gd/AXa2Ej\'))" to "include \''._COMMONS_ENTRY.'\';"'.PHP_EOL;
 	}
 	
 	function import($module_name) {
