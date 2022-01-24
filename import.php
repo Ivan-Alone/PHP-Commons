@@ -7,9 +7,9 @@
 	}
 	
 	if (!file_exists('import.php')) {
-		$data = substr(@file_get_contents(_COMMONS_REPO.'/../import.php')), 2);
+		$data = substr(@file_get_contents(_COMMONS_REPO.'/../import.php'), 2);
 		if (strlen($data) > 0) {
-			file_put_contents('import.php', $data));
+			file_put_contents('import.php', $data);
 		}
 	}
 	
