@@ -17,7 +17,7 @@
 	}
 	
 	if (!defined('_COMMONS_NO_WARNING') && strtolower(basename(__FILE__)) != strtolower(_COMMONS_ENTRY) && file_exists(_COMMONS_ENTRY)) {
-		echo '[Info] PHP Commons import script loaded and stored, please replace "eval(file_get_contents(\'https://is.gd/AXa2Ej\'))" to "include \''._COMMONS_ENTRY.'\';"'.PHP_EOL;
+		echo '[Info] PHP Commons script stored, replace [ eval(file_get_contents(\'https://is.gd/AXa2Ej\')); ] to [ include \''._COMMONS_ENTRY.'\'; ] for safety'.PHP_EOL;
 	}
 	
 	function import($module_name) {
