@@ -1,4 +1,4 @@
-<?php
+//<?php
 	if (!defined('_COMMONS_ENTRY')) {
 		define('_COMMONS_ENTRY', 'import.php');
 	}
