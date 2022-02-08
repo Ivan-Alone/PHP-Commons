@@ -21,12 +21,17 @@
 	}
 	
 	function import($module_name) {
+		if (!is_array($_SERVER['PHP_COMMONS_IMPORTED'])) $_SERVER['PHP_COMMONS_IMPORTED'] = [];
 		if (!file_exists(_COMMONS_DIR)) {
 			mkdir(_COMMONS_DIR);
+		}
+		if (in_array(strtolower($module), $_SERVER['PHP_COMMONS_IMPORTED'])) {
+			return;
 		}
 		if (!file_exists(_COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name))) {
 			$dependencies = @json_decode(file_get_contents(_COMMONS_REPO.'/'.basename($module_name).'.deps'));
 			if (is_array($dependencies)) {
+				file_put_contents(_COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name).'.deps', json_encode($dependencies));
 				foreach ($dependencies as $dep) {
 					switch (strtolower($dep->type)) {
 						case 'bin':
@@ -52,5 +57,16 @@
 				file_put_contents(_COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name), $data);
 			}
 		}
+		$deps_info = _COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name) . '.deps';
+		if (file_exists($deps_info) && is_array($deps = @json_decode(file_get_contents($deps_info)))) {
+			foreach ($deps as $dep) {
+				switch (strtolower($dep->type)) {
+					case 'php':
+					default:
+						import($dep->import);
+				}
+			}
+		}
 		include(_COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name));
+		array_push($_SERVER['PHP_COMMONS_IMPORTED'], strtolower($module));
 	}
