@@ -1,0 +1,9 @@
+[
+	{
+		"type": "bin",
+		"files": [
+			"bin/keyboard.exe",
+			"bin/keyboard32.exe"
+		]
+	}
+]
