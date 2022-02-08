@@ -1,4 +1,4 @@
-//<?php
+<?php
 	if (!defined('_COMMONS_ENTRY')) {
 		define('_COMMONS_ENTRY', 'import.php');
 	}
@@ -25,6 +25,28 @@
 			mkdir(_COMMONS_DIR);
 		}
 		if (!file_exists(_COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name))) {
+			$dependencies = @json_decode(file_get_contents(_COMMONS_REPO.'/'.basename($module_name).'.deps'));
+			if (is_array($dependencies)) {
+				foreach ($dependencies as $dep) {
+					switch (strtolower($dep->type)) {
+						case 'bin':
+							if (!is_array($dep->files)) {
+								$dep->files = [$dep->files];
+							}
+							foreach ($dep->files as $file) {
+								$f_data = @file_get_contents(_COMMONS_REPO.'/'.$file);
+								if (strlen($f_data) > 0) {
+									@mkdir(_COMMONS_DIR . DIRECTORY_SEPARATOR . pathinfo($f_data, PATHINFO_DIRNAME), 0777, true);
+									file_put_contents(_COMMONS_DIR . DIRECTORY_SEPARATOR . $file, $f_data);
+								}
+							}
+							break;
+						case 'php':
+						default:
+							import($dep->import);
+					}
+				}
+			}
 			$data = @file_get_contents(_COMMONS_REPO.'/'.basename($module_name));
 			if (strlen($data) > 0) {
 				file_put_contents(_COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name), $data);
