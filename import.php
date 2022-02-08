@@ -21,11 +21,11 @@
 	}
 	
 	function import($module_name) {
-		if (!is_array($_SERVER['PHP_COMMONS_IMPORTED'])) $_SERVER['PHP_COMMONS_IMPORTED'] = [];
+		if (!is_array(@$_SERVER['PHP_COMMONS_IMPORTED'])) $_SERVER['PHP_COMMONS_IMPORTED'] = [];
 		if (!file_exists(_COMMONS_DIR)) {
 			mkdir(_COMMONS_DIR);
 		}
-		if (in_array(strtolower($module), $_SERVER['PHP_COMMONS_IMPORTED'])) {
+		if (in_array(strtolower(basename($module_name)), $_SERVER['PHP_COMMONS_IMPORTED'])) {
 			return;
 		}
 		if (!file_exists(_COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name))) {
@@ -41,13 +41,12 @@
 							foreach ($dep->files as $file) {
 								$f_data = @file_get_contents(_COMMONS_REPO.'/'.$file);
 								if (strlen($f_data) > 0) {
-									@mkdir(_COMMONS_DIR . DIRECTORY_SEPARATOR . pathinfo($f_data, PATHINFO_DIRNAME), 0777, true);
+									@mkdir(_COMMONS_DIR . DIRECTORY_SEPARATOR . pathinfo($file, PATHINFO_DIRNAME), 0777, true);
 									file_put_contents(_COMMONS_DIR . DIRECTORY_SEPARATOR . $file, $f_data);
 								}
 							}
 							break;
 						case 'php':
-						default:
 							import($dep->import);
 					}
 				}
@@ -62,11 +61,10 @@
 			foreach ($deps as $dep) {
 				switch (strtolower($dep->type)) {
 					case 'php':
-					default:
 						import($dep->import);
 				}
 			}
 		}
 		include(_COMMONS_DIR . DIRECTORY_SEPARATOR . basename($module_name));
-		array_push($_SERVER['PHP_COMMONS_IMPORTED'], strtolower($module));
+		array_push($_SERVER['PHP_COMMONS_IMPORTED'], strtolower(basename($module_name)));
 	}
