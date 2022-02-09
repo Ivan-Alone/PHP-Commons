@@ -6,11 +6,15 @@ This is very simple packet manager. You must include main injector `import.php` 
 ```php
 eval(file_get_contents('https://is.gd/AXa2Ej'));
 ```
-All will works. It can be unsafe, so you must replace it to:
+All will works. It can be unsafe, so you can replace it to:
 ```php
 include 'import.php';
 ```
-in production. Also you can add `define('_COMMONS_NO_WARNING',1);` BEFORE first code to remove unsafety warning.
+in production.
+
+Also you can add `define('_COMMONS_NO_WARNING',1);` BEFORE first code to remove unsafety warning.
+
+Remember that replacement `eval...` to `include...` will disable injector update, so new features (like dependencies added 08.02.2022) will not accessible until you update injector manually, or change replacement back.
 
 ## Examples
 
