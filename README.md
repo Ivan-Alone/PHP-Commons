@@ -12,7 +12,7 @@ include 'import.php';
 ```
 in production.
 
-Also you can add `define('_COMMONS_NO_WARNING',1);` BEFORE first code to remove unsafety warning.
+Also you can add `define('_COMMONS_SAFE_MODE',1);` BEFORE first code (or export enviroment variable `SAFE_MODE`) to enable unsafety warning and auto-downloading `import.php` to current dir.
 
 Remember that replacement `eval...` to `include...` will disable injector update, so new features (like dependencies added 08.02.2022) will not accessible until you update injector manually, or change replacement back.
 
