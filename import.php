@@ -8,16 +8,16 @@
 	if (!defined('_COMMONS_DIR')) {
 		define('_COMMONS_DIR', 'common_scripts');
 	}
-	
-	if (!file_exists(_COMMONS_ENTRY)) {
+
+	if ((defined('_COMMONS_SAFE_MODE') || isset($_SERVER['SAFE_MODE'])) && !file_exists(_COMMONS_ENTRY)) {
 		$data = substr(@file_get_contents(_COMMONS_REPO.'/../import.php'), 2);
 		if (strlen($data) > 0) {
 			@file_put_contents(_COMMONS_ENTRY, $data);
 		}
 	}
-	
-	if (!defined('_COMMONS_NO_WARNING') && strtolower(basename(__FILE__)) != strtolower(_COMMONS_ENTRY) && file_exists(_COMMONS_ENTRY)) {
-		echo '[Info] PHP Commons script stored, replace [ eval(file_get_contents(\'https://is.gd/AXa2Ej\')); ] to [ include \''._COMMONS_ENTRY.'\'; ] for safety'.PHP_EOL;
+
+	if ((defined('_COMMONS_SAFE_MODE') || isset($_SERVER['SAFE_MODE'])) && strtolower(basename(__FILE__)) != strtolower(_COMMONS_ENTRY) && file_exists(_COMMONS_ENTRY)) {
+		echo '[Info] Safe mode enabled. PHP Commons script stored, replace [ eval(file_get_contents(\'https://is.gd/AXa2Ej\')); ] to [ include \''._COMMONS_ENTRY.'\'; ] for safety'.PHP_EOL;
 	}
 	
 	function import($module_name) {
