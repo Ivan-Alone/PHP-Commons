@@ -1,0 +1,8 @@
+[
+  {
+    "comment": "Names conflict resolved via self-hack",
+    "type":    "php",
+    "import":  "master/ConsoleGraph.class.php",
+	"from":    "https://raw.githubusercontent.com/Ivan-Alone/PHP-ConsoleGraph/"
+  }
+]
