@@ -1,11 +1,11 @@
 [
   {
     "type":    "php",
-	"import":  "Network.class.php"
+    "import":  "Network.class.php"
   }, {
-	"comment": "Names conflict resolved via self-hack",
+    "comment": "Names conflict resolved via self-hack",
     "type":    "php",
-	"from":    "https://raw.githubusercontent.com/Ivan-Alone/VkAccess/",
-	"import":  "master/VkAccess.class.php"
+    "from":    "https://raw.githubusercontent.com/Ivan-Alone/VkAccess/",
+    "import":  "master/VkAccess.class.php"
   }
 ]
