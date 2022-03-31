@@ -4,64 +4,63 @@
 		private $cookie_path;
 		private $proxy_data;
 		
-		private $latest_curl, $latest_curl_info;
+		private $latest_curl_info;
 		
-		private $defaultUserAgent;
+		private $defaultUserAgent, $advancedInfoOptions = null;
 		
 		public function __construct($cookie_path, $proxy_data = null) {
-			$this->latest_curl = null;
 			$this->defaultUserAgent = null;
 			@mkdir(pathinfo($cookie_path, PATHINFO_DIRNAME), 0777, true);
 			$this->cookie_path = $cookie_path;
 			$this->proxy_data = $proxy_data;
 		}
 	
-		public function GetQuery($url, $header_plus = array(), $noDecodeJSON = false) {
-			return $this->Request(array(
+		public function GetQuery($url, $header_plus = [], $noDecodeJSON = false) {
+			return $this->Request([
 				CURLOPT_URL => $url
-			), $header_plus, $noDecodeJSON);
+			], $header_plus, $noDecodeJSON);
 		}
 		
-		public function PostQuery($url, $par_array = array(), $header_plus = array(), $noDecodeJSON = false) {
-			return $this->Request(array(
+		public function PostQuery($url, $par_array = [], $header_plus = [], $noDecodeJSON = false) {
+			return $this->Request([
 				CURLOPT_URL => $url,
 				CURLOPT_POST => 1,
 				CURLOPT_POSTFIELDS => $par_array
-			), $header_plus, $noDecodeJSON);
+			], $header_plus, $noDecodeJSON);
 		}
 		
-		public function Request($curl_opt_array, $header_plus = array(), $noDecodeJSON = false) {
-			$this->latest_curl = curl_init();
+		public function Request($curl_opt_array, $header_plus = [], $noDecodeJSON = false) {
+			$curl_handle = curl_init();
 			if ($this->proxy_data != null) {
-				curl_setopt($this->latest_curl, CURLOPT_PROXY, $this->proxy_data);
+				curl_setopt($curl_handle, CURLOPT_PROXY, $this->proxy_data);
 			}
 			
 			foreach ($curl_opt_array as $id => $value) {
-				curl_setopt($this->latest_curl, $id, $value);
+				curl_setopt($curl_handle, $id, $value);
 			}
 		
-			$header = array(
-				'User-Agent' => $this->defaultUserAgent != null ? $this->defaultUserAgent : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0', 
+			$header = [
+				'User-Agent' => $this->defaultUserAgent != null ? $this->defaultUserAgent : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0', 
 				'Accept' => '*/*', 
 				'Accept-Language' => 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3', 
 				'Connection' => 'keep-alive'
-			);
+			];
 			foreach ($header_plus as $name => $value) {
 				$header[$name] = $value;
 			}
 			
-			curl_setopt($this->latest_curl, CURLOPT_RETURNTRANSFER,1);
-			curl_setopt($this->latest_curl, CURLOPT_SSL_VERIFYPEER, 0); 
-			curl_setopt($this->latest_curl, CURLOPT_SSL_VERIFYHOST, 0);
-			curl_setopt($this->latest_curl, CURLOPT_HTTPHEADER, $this->compileHeader($header, array('Accept')));
-			curl_setopt($this->latest_curl, CURLOPT_COOKIEJAR, $this->cookie_path); 
-			curl_setopt($this->latest_curl, CURLOPT_COOKIEFILE, $this->cookie_path); 
+			curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, 0); 
+			curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, 0);
+			curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $this->compileHeader($header, ['Accept']));
+			curl_setopt($curl_handle, CURLOPT_COOKIEJAR, $this->cookie_path); 
+			curl_setopt($curl_handle, CURLOPT_COOKIEFILE, $this->cookie_path); 
 			
-			$data = curl_exec($this->latest_curl);
+			$data = curl_exec($curl_handle);
 			
-			$this->latest_curl_info = curl_getinfo($this->latest_curl);
+			$this->latest_curl_info = curl_getinfo($curl_handle, $this->advancedInfoOptions);
 			
-			curl_close($this->latest_curl);
+			curl_close($curl_handle);
 			
 			if ($noDecodeJSON) return $data;
 			
@@ -70,6 +69,10 @@
 			if (is_array($json)) return $json;
 			
 			return false;
+		}
+		
+		public function applyInfoOptions($options = null) {
+			$this->advancedInfoOptions = $options;
 		}
 		
 		public function setDefaultAgent(string $userAgent) {
@@ -81,7 +84,7 @@
 		}
 		
 		private function compileHeader($header_array, $remove_array) {
-			$header = array();
+			$header = [];
 			foreach($remove_array as $val) $header[] = $val.':';
 			foreach($header_array as $key => $val) $header[] = $key . ': ' . $val;
 			return $header;
@@ -121,13 +124,13 @@
 		}
 		
 		public function extractCookies($string) {
-			$cookies = array();
+			$cookies = [];
 			$lines = explode("\n", $string);
 			foreach ($lines as $line) {
 				if (isset($line[0]) && substr_count($line, "\t") == 6) {
 					$tokens = explode("\t", $line);
 					$tokens = array_map('trim', $tokens);
-					$cookie = array();
+					$cookie = [];
 					$cookie['flag'] = $tokens[1];
 					$cookie['path'] = $tokens[2];
 					$cookie['secure'] = $tokens[3];
