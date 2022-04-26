@@ -6,11 +6,11 @@
 
 		switch ($loading_fix_mode) {
 			case 1:
-				// HTML loading fix: add XML encoding tag to try fix UTF-8 page
+				// HTML loading fix: add XML encoding tag to try fix UTF-8? page
 				$page = '<?xml encoding="' . $source_encoding . '" ?>' . $page;
 				break;
 			case 2:
-				// HTML loading fix: add XML encoding tag to try fix page
+				// HTML loading fix: convert full page to html entities to try fix UTF-8? page
 				$page = mb_convert_encoding($page, 'HTML-ENTITIES', $source_encoding);
 				break;
 		}
