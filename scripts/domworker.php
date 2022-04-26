@@ -1,9 +1,20 @@
 <?php
 	# Library: DOM Workers
 
-	function loadHTML($page) {
+	function loadHTML($page, $loading_fix_mode = 0, $source_encoding = 'utf-8') {
 		$document = new DOMDocument();
 
+		switch ($loading_fix_mode) {
+			case 1:
+				// HTML loading fix: add XML encoding tag to try fix UTF-8 page
+				$page = '<?xml encoding="' . $source_encoding . '" ?>' . $page;
+				break;
+			case 2:
+				// HTML loading fix: add XML encoding tag to try fix page
+				$page = mb_convert_encoding($page, 'HTML-ENTITIES', $source_encoding);
+				break;
+		}
+		
 		libxml_use_internal_errors(true); 
 		$document->loadHTML($page);
 		libxml_clear_errors();
