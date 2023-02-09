@@ -1,0 +1,9 @@
+[
+    {
+        "comment": "Official Madeline Proto import",
+        "type": "php",
+        "import": "madeline.php",
+        "from": "https://phar.madelineproto.xyz/"
+        
+    }
+]
