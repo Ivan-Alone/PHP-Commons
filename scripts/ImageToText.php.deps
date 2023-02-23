@@ -1,0 +1,11 @@
+[
+  {
+    "type":    "php",
+    "import":  "AntiCaptcha.php"
+  }, {
+    "comment": "Names conflict resolved via self-hack",
+    "type":    "php",
+    "from":    "https://raw.githubusercontent.com/Ivan-Alone/anticaptcha-php/",
+    "import":  "master/imagetotext.php"
+  }
+]
