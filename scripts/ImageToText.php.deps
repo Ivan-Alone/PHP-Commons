@@ -5,7 +5,7 @@
   }, {
     "comment": "Names conflict resolved via self-hack",
     "type":    "php",
-    "from":    "https://raw.githubusercontent.com/Ivan-Alone/anticaptcha-php/",
+    "from":    "https://raw.githubusercontent.com/AdminAnticaptcha/anticaptcha-php/",
     "import":  "master/imagetotext.php"
   }
 ]
