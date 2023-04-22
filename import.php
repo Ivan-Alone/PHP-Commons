@@ -1,4 +1,4 @@
-<?php
+//<?php
 	define('_COMMONS_DIR_DEFAULT', 'common_scripts');
 	if (!defined('_COMMONS_ENTRY')) {
 		define('_COMMONS_ENTRY', 'import.php');
