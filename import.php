@@ -1,5 +1,5 @@
 <?php
-    define('_COMMONS_DIR_DEFAULT', 'common_scripts');
+	define('_COMMONS_DIR_DEFAULT', 'common_scripts');
 	if (!defined('_COMMONS_ENTRY')) {
 		define('_COMMONS_ENTRY', 'import.php');
 	}
@@ -35,7 +35,7 @@
 		$module_name_dynamic = implode('/', $module_name_parts);
 		$module_name_static = str_replace('/', '_', $module_name_dynamic);
 
-        $_COMMONS_DIR = _COMMONS_DIR == _COMMONS_DIR_DEFAULT ? (__DIR__ ? __DIR__ . DIRECTORY_SEPARATOR : '') . _COMMONS_DIR : _COMMONS_DIR;
+		$_COMMONS_DIR = _COMMONS_DIR == _COMMONS_DIR_DEFAULT ? (__DIR__ ? __DIR__ . DIRECTORY_SEPARATOR : '') . _COMMONS_DIR : _COMMONS_DIR;
 		if (!is_array(@$_SERVER['PHP_COMMONS_IMPORTED'])) $_SERVER['PHP_COMMONS_IMPORTED'] = [];
 		if (!file_exists($_COMMONS_DIR)) {
 			mkdir($_COMMONS_DIR);
