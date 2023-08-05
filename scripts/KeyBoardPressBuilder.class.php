@@ -25,7 +25,7 @@
 			return $this;
 		}
 		public function press($sleep_timer = 0, $noReset = false) {
-			exec(__DIR__ . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . (static::is64Bits() ? 'keyboard' : 'keyboard32') . (PHP_OS == 'WINNT' ? '.exe' : null) . ' ' . ($this->pressUp ? '' : '-nku ') . ($this->pressDown ? '' : '-nkd ') . implode(' ', $this->keys));
+			exec('"' . __DIR__ . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . (static::is64Bits() ? 'keyboard' : 'keyboard32') . (PHP_OS == 'WINNT' ? '.exe' : null) . '" ' . ($this->pressUp ? '' : '-nku ') . ($this->pressDown ? '' : '-nkd ') . implode(' ', $this->keys));
 			usleep($sleep_timer * 1000);
 			if (!$noReset) {
 				$this->keys = [];
