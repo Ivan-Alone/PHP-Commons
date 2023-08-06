@@ -1,8 +1,8 @@
 <?php
 	class KeyBoardPressBuilder {
-		private $keys;
-		private $pressDown;
-		private $pressUp;
+		protected $keys;
+		protected $pressDown;
+		protected $pressUp;
 
 		private function __construct() {
 			$this->keys = [];
