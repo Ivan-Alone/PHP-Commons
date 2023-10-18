@@ -64,7 +64,7 @@
 				$attrs = array();
 				if (@$node->attributes->length > 0) foreach ($node->attributes as $attr) $attrs[$attr->name] = $attr->value;
 
-				if ($strict ? (@$attrs['class'] == $class) : (strpos(@$attrs['class'], $class) !== false)) {
+				if ($strict ? (@$attrs['class'] == $class) : (strpos(@$attrs['class'] ?? '', $class) !== false)) {
 					$elements[] = $node;
 				}
 
@@ -88,7 +88,7 @@
 				$attrs = array();
 				if (@$node->attributes->length > 0) foreach ($node->attributes as $attr) $attrs[$attr->name] = $attr->value;
 
-				if (strpos(@$attrs['id'], $id) !== false) {
+				if (strpos(@$attrs['id'] ?? '', $id) !== false) {
 					$elements[] = $node;
 				}
 
