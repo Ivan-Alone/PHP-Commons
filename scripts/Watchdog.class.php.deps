@@ -1,18 +1,18 @@
 [
-	{
-		"type": "bin",
-		"files": [
-            "watchdog32.exe",
-            "watchdog.exe",
-            "watchdog.arm.exe",
-            "watchdog32",
-            "watchdog",
-            "watchdog.arm32",
-            "watchdog.aarch64",
-            "watchdog.mips32",
-            "watchdog32.freebsd",
-            "watchdog.freebsd",
-            "watchdog.darwin"
-		]
-	}
+    {
+        "type": "bin",
+        "files": [
+            "bin/wdt/watchdog32.exe",
+            "bin/wdt/watchdog.exe",
+            "bin/wdt/watchdog.arm.exe",
+            "bin/wdt/watchdog32",
+            "bin/wdt/watchdog",
+            "bin/wdt/watchdog.arm32",
+            "bin/wdt/watchdog.aarch64",
+            "bin/wdt/watchdog.mips32",
+            "bin/wdt/watchdog32.freebsd",
+            "bin/wdt/watchdog.freebsd",
+            "bin/wdt/watchdog.darwin"
+        ]
+    }
 ]
