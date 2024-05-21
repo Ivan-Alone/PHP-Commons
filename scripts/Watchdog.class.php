@@ -109,7 +109,7 @@
             } else {
                 $type = trim(static::exec('uname -m'));
                 $res = trim(strtolower(explode('_', $type)[0]));
-                return $res == 'amd64' ? 'x86' : $res;
+                return in_array($res, [ 'amd64', 'i686', 'i586', 'i486', 'i386' ]) ? 'x86' : $res;
             }
         }
     
