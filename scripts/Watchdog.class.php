@@ -38,6 +38,9 @@
             if (!file_exists($wdt_exe)) {
                 throw new Exception('Main WDT executable not found: ' . $wdt_exe . " !");
             } else {
+                if (!static::isWindows()) {
+                    static::exec('chmod +x "' . $wdt_exe . '"');
+                }
                 if ($use_default_popen) {
                     $this->proc_handle = popen($cmd, 'w');
                     $this->handles     = [ $this->proc_handle ];
