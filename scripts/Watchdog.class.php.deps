@@ -1,0 +1,18 @@
+[
+	{
+		"type": "bin",
+		"files": [
+            "watchdog32.exe",
+            "watchdog.exe",
+            "watchdog.arm.exe",
+            "watchdog32",
+            "watchdog",
+            "watchdog.arm32",
+            "watchdog.aarch64",
+            "watchdog.mips32",
+            "watchdog32.freebsd",
+            "watchdog.freebsd",
+            "watchdog.darwin"
+		]
+	}
+]
