@@ -101,6 +101,7 @@
                                 return 'arm';
                             case 'X86':
                             case 'AMD64':
+                            case 'INTEL64':
                                 return 'x86';
                         }
                     }
