@@ -94,6 +94,7 @@
                         switch (explode(' ', $test[2])[0]) {
                             case 'ARM64':
                             case 'ARMV8':
+                            case 'ARMV7':
                                 return 'arm';
                             case 'X86':
                             case 'AMD64':
@@ -104,7 +105,8 @@
                 return 'unknown';
             } else {
                 $type = trim(static::exec('uname -m'));
-                return trim(strtolower(explode('_', $type)[0]));
+                $res = trim(strtolower(explode('_', $type)[0]));
+                return $res == 'amd64' ? 'x86' : $res;
             }
         }
     
